@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Добавьте environment для лучшего отслеживания
+    environment: ci-production
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,14 +20,15 @@ jobs:
           echo "🧪 Running automated tests..."
           echo "✅ All tests passed!"
           echo "📊 Test coverage: 95%"
-          # Добавляем информацию для уведомлений
           echo "BRANCH: ${{ github.ref_name }}"
           echo "AUTHOR: ${{ github.actor }}"
           echo "COMMIT: ${{ github.sha }}"
       
       - name: Build completed
         run: echo "🎉 CI pipeline finished successfully!"
-    
-    # Добавляем вывод для лучших уведомлений
-    outputs:
-      status: ${{ job.status }}
+      
+      # Явно устанавливаем статус для GitHub
+      - name: Update Status
+        if: always()
+        run: |
+          echo "Workflow status: ${{ job.status }}"
