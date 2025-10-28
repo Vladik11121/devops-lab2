@@ -17,6 +17,14 @@ jobs:
           echo "🧪 Running automated tests..."
           echo "✅ All tests passed!"
           echo "📊 Test coverage: 95%"
+          echo "📝 Branch: ${{ github.ref }}"
+          echo "👤 Author: ${{ github.actor }}"
+          echo "🔗 Commit: ${{ github.sha }}"
       
       - name: Build completed
-        run: echo "🎉 CI pipeline finished successfully!"
+        if: success()
+        run: echo "🎉 CI pipeline finished successfully! Status: SUCCESS"
+      
+      - name: Build failed
+        if: failure()
+        run: echo "❌ CI pipeline failed! Status: FAILURE"
