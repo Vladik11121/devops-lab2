@@ -17,6 +17,14 @@ jobs:
           echo "🧪 Running automated tests..."
           echo "✅ All tests passed!"
           echo "📊 Test coverage: 95%"
+          # Добавляем информацию для уведомлений
+          echo "BRANCH: ${{ github.ref_name }}"
+          echo "AUTHOR: ${{ github.actor }}"
+          echo "COMMIT: ${{ github.sha }}"
       
       - name: Build completed
         run: echo "🎉 CI pipeline finished successfully!"
+    
+    # Добавляем вывод для лучших уведомлений
+    outputs:
+      status: ${{ job.status }}
